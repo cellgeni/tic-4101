@@ -54,12 +54,13 @@ process downsampleAdata {
         tuple val(meta), path(adata)
     output:
         tuple val(meta), path("downsampled.h5ad"), emit: h5ad
-        tuple val(meta), path("pca_matrix.npy"), emit: npy
+        tuple val(pca_meta), path("pca_matrix.npy"), emit: npy
         tuple val(meta), path("downsample_cells.json"), emit: json
         path "versions.yml", emit: versions
     
     script:
         def args = task.ext.args ?: ""
+        pca_meta = [id: "PCA", sample_id: meta.id]
         """
         preprocess_downsample.py \
         $adata \
@@ -132,7 +133,7 @@ process downsampleAdata {
 //         """
 // }
 
-process scIB {
+process scIBenchmark {
     tag "Running scIB for sample ${meta_adata.id} and representation ${meta_representation.id}"
     container '/nfs/cellgeni/singularity/images/scib_metrics.sif'
     input:
@@ -163,7 +164,7 @@ process scIB {
         """
 }
 
-process scIB_plot {
+process scIBPlot {
     tag "Plotting SCIB results"
     container '/nfs/cellgeni/singularity/images/scib_metrics.sif'
     input:
@@ -171,6 +172,7 @@ process scIB_plot {
     output:
         path "*.svg", emit: svg
         path "versions.yml", emit: versions
+        path "*.csv", emit: csv
     
     script:
         """
@@ -185,7 +187,7 @@ process scIB_plot {
         """
 }
 
-process collect_versions {
+process collectVersions {
     tag "Collecting version files"
     input:
         path versions, stageAs: "versions/*.yml"
@@ -236,13 +238,14 @@ workflow {
     // Run scIB
     downsampled_adata = downsampleAdata.output.h5ad.collect()
     downsampled_cells = downsampleAdata.output.json.collect()
-    scIB(downsampled_adata, scVI.output.npy, downsampled_cells)
+    representations = scVI.output.npy.mix(downsampleAdata.output.npy)
+    scIBenchmark(downsampled_adata, representations, downsampled_cells)
 
     // Plot scIB results
-    scib_results = scIB.output.csv.map { meta, path -> path}.collect(flat: false)
-    scIB_plot(scib_results)
+    scib_results = scIBenchmark.output.csv.map { meta, path -> path}.collect(flat: false)
+    scIBPlot(scib_results)
 
     // Collect versions
-    versions = scVI.output.versions.first().concat(downsampleAdata.output.versions, scIB.output.versions.first(), scIB_plot.output.versions).collect()
-    collect_versions(versions)
+    versions = scVI.output.versions.first().concat(downsampleAdata.output.versions, scIBenchmark.output.versions.first(), scIBPlot.output.versions).collect()
+    collectVersions(versions)
 }
