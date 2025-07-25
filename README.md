@@ -16,3 +16,8 @@ Run highly variable genes search. You will need `src`, `config` and `data` packa
 ```
 bsub < ./scripts/hvg_script.bsub
 ```
+
+Run scvi hyper-parameter search
+```
+bsub < ./scripts/run_integration.bsub
+```
