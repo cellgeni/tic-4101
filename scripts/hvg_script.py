@@ -42,7 +42,7 @@ import anndata as ad
 import scanpy as sc
 import scipy
 import pickle
-import data.data.dataset_keys
+import data.dataset_keys
 import numpy as np
 import pandas as pd
 import src.preprocessing
@@ -64,8 +64,8 @@ gc.enable()
 
 # %%
 logging.info("Reading the anndata file...")
-adata_file_path = "data/subset_100k.h5ad"
-# adata_file_path = "/lustre/scratch126/cellgen/haniffa/ar32/combine_IA_WE_with_fix/raw_outer_IA_WE_data_20250704.h5ad"
+# adata_file_path = "/lustre/scratch127/cellgen/cellgeni/tickets/tic-4101/data/subset_100k.h5ad"
+adata_file_path = "/lustre/scratch126/cellgen/haniffa/ar32/combine_IA_WE_with_fix/raw_outer_IA_WE_data_20250704.h5ad"
 logging.info(f"Loading data from: {adata_file_path}")
 adata = sc.read_h5ad(adata_file_path)
 logging.info(f"Loaded data with shape: {adata.shape}")
