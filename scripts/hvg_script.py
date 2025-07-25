@@ -64,8 +64,8 @@ gc.enable()
 
 # %%
 logging.info("Reading the anndata file...")
-# adata_file_path = "data/subset_100k.h5ad"
-adata_file_path = "/lustre/scratch126/cellgen/haniffa/ar32/combine_IA_WE_with_fix/raw_outer_IA_WE_data_20250704.h5ad"
+adata_file_path = "data/subset_100k.h5ad"
+# adata_file_path = "/lustre/scratch126/cellgen/haniffa/ar32/combine_IA_WE_with_fix/raw_outer_IA_WE_data_20250704.h5ad"
 logging.info(f"Loading data from: {adata_file_path}")
 adata = sc.read_h5ad(adata_file_path)
 logging.info(f"Loaded data with shape: {adata.shape}")
@@ -415,10 +415,10 @@ logging.info(f"Applied HVG filter: {initial_shape} -> {adata.shape}")
 # %%
 logging.info("=== STEP 18: Saving results ===")
 split_path = os.path.splitext(adata_file_path)
-# write_name = "data/subset_100k_processed.h5ad"
-# write_name_pickle = "data/subset_100k_processed.pickle"
-write_name = "data/raw_outer_IA_WE_data_20250704.h5ad"
-write_name_pickle = "data/raw_outer_IA_WE_data_20250704.pickle"
+# write_name = "results/subset_100k_processed.h5ad"
+# write_name_pickle = "results/subset_100k_processed.pickle"
+write_name = "results/raw_outer_IA_WE_data_20250704.h5ad"
+write_name_pickle = "results/raw_outer_IA_WE_data_20250704.pickle"
 # %%
 logging.info(f"Saving pickle file to: {write_name_pickle}")
 with open(write_name_pickle, "wb") as file:
