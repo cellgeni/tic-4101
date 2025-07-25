@@ -1,0 +1,18 @@
+# BSUB -G cellgeni
+# BSUB -q teramem
+# BSUB -n 16
+# BSUB -J "run_hvg_weia_the_whole_thingie"
+# BSUB -M 1500GB
+# BSUB -R "select[mem>1500GB] rusage[mem=1500GB]"
+# BSUB -sp 100
+# BSUB -o hvgOutput%J.log
+# BSUB -e hvgError%J.log
+
+script=/lustre/scratch127/cellgen/cellgeni/tickets/tic-4101/scripts/hvg_script.py
+
+echo "$PWD"
+
+singularity exec \
+  --bind /lustre,/nfs \
+  /nfs/cellgeni/singularity/images/toh5ad.sif \
+  python $script
