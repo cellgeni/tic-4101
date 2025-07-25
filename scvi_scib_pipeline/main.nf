@@ -171,8 +171,8 @@ process scIBPlot {
         path result_files, stageAs: "results/*"
     output:
         path "*.svg", emit: svg
-        path "versions.yml", emit: versions
         path "*.csv", emit: csv
+        path "versions.yml", emit: versions
     
     script:
         """
@@ -238,7 +238,7 @@ workflow {
     // Run scIB
     downsampled_adata = downsampleAdata.output.h5ad.collect()
     downsampled_cells = downsampleAdata.output.json.collect()
-    representations = scVI.output.npy.mix(downsampleAdata.output.npy)
+    representations = scVI.output.npy
     scIBenchmark(downsampled_adata, representations, downsampled_cells)
 
     // Plot scIB results
