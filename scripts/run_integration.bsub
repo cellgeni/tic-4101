@@ -6,4 +6,4 @@
 #BSUB -o "logs/integrationOutput%J.log"
 #BSUB -e "logs/integrationError%J.log"
 
-nextflow run scvi_scib_pipeline/main.nf
+nextflow run scvi_scib_pipeline/main.nf -resume
