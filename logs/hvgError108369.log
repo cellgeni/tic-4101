@@ -1,0 +1,22 @@
+2025-07-25 13:17:50,216 - WARNING - This WARNING message goes to stderr
+2025-07-25 13:17:50,217 - ERROR - This ERROR message goes to stderr
+/lustre/scratch127/cellgen/cellgeni/tickets/tic-4101/scripts/hvg_script_subset.py:198: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+  .groupby([batch_key, "handle_anndata"])
+normalizing counts per cell
+    finished (0:00:08)
+extracting highly variable genes
+    finished (0:00:23)
+extracting highly variable genes
+    finished (0:01:37)
+--> added
+    'highly_variable', boolean vector (adata.var)
+    'means', float vector (adata.var)
+    'dispersions', float vector (adata.var)
+    'dispersions_norm', float vector (adata.var)
+/lustre/scratch127/cellgen/cellgeni/tickets/tic-4101/scripts/hvg_script_subset.py:396: FutureWarning: A value is trying to be set on a copy of a DataFrame or Series through chained assignment using an inplace method.
+The behavior will change in pandas 3.0. This inplace method will never work because the intermediate object on which we are setting values always behaves as a copy.
+
+For example, when doing 'df[col].method(value, inplace=True)', try using 'df.method({col: value}, inplace=True)' or df[col] = df[col].method(value) instead, to perform the operation inplace on the original object.
+
+
+  df["highly_variable_intersection"].replace(
