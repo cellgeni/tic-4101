@@ -203,6 +203,7 @@ process collectVersions {
 
 workflow {
     sample_id = channel.value([[id: params.sample_id], file(params.adata)])
+    downsample_adata = channel.value([[id: params.sample_id], file(params.downsample_adata)])
 
     // Convert the parameters to channels
     batch_key = channel.fromList(params.batch_key)
@@ -230,7 +231,7 @@ workflow {
     scVI(sample_id, params)
 
     // Run downsampling
-    downsampleAdata(sample_id)
+    downsampleAdata(downsample_adata)
 
     // Run PCA preprocessing
     // preprocess_pca(sample_id)
